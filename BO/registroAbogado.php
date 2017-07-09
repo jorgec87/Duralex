@@ -7,7 +7,7 @@
         //$id_usu=$_SESSION['id_cliente'];
         $error="";
  //   Imprimir parametros
-        print_r($_POST);
+        //print_r($_POST);
          // valida que todos los datos sean recibidos correctamente
         if(!isset($_POST['txtNombre'])) {
                 $error="Ocurrio un problema con el nombre";
@@ -75,6 +75,6 @@
                        ':ESPECIALIDAD' => $especialidad,
                        ':VALOR_X_HORA' => $valor          
                ));           
-           // header("location: ../index.php");
+           header("location: ../listarAbogados.php");
             }
 ?>

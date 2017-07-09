@@ -4,7 +4,12 @@ require_once './EasyPDO/conexionPDO.php';
 
 //        Consulta a la tablas categoria
 
-$sql_ABOGADOS = $db->get_results("SELECT * FROM duralex.ABOGADOS");
+$sql_ATENCIONES = $db->get_results("SELECT ID_ATENCION id,".
+"FECHA_ATENCION fecha,VALOR valor,".
+(SELECT concat(NOMBRE_CLI," ",APELLIDOP_CLI," ",APELLIDOM_CLI) FROM duralex.clientes where ID_CLIENTE=ID_CLIENTE) cliente,
+(SELECT concat(NOMBRE_ABO," ",APELLIDOP_ABO," ",APELLIDOM_ABO) FROM duralex.abogados where ID_ABOGADO=ID_ABOGADO) abogado,
+(SELECT DESCRIPCION FROM duralex.estados WHERE ID_ESTADO = ID_ESTADO) estado
+FROM duralex.atenciones;");
 
 //         Fin consultas
 
@@ -16,7 +21,7 @@ $sql_ABOGADOS = $db->get_results("SELECT * FROM duralex.ABOGADOS");
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-        <title>Duralex - Listar Abogados</title>
+        <title>Duralex - Listar Atenciones</title>
         <!-- bootstrap -->
         <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.min.css" />
         <!-- RTL support - for demo only -->
@@ -96,13 +101,25 @@ $sql_ABOGADOS = $db->get_results("SELECT * FROM duralex.ABOGADOS");
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="crearAbogado.php" class="active">
+                                            <a href="crearAbogado.php">
                                                 <i class="fa fa-dashboard"></i>
                                                 <span>Agregar Abogado</span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="crearAtencion.php" class="active">
+                                            <a href="listarAbogados.php">
+                                                <i class="fa fa-dashboard"></i>
+                                                <span>Agregar Abogado</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="crearAtencion.php">
+                                                <i class="fa fa-dashboard"></i>
+                                                <span>Crear Atencion</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="listarAtenciones.php" class="active">
                                                 <i class="fa fa-dashboard"></i>
                                                 <span>Crear Atencion</span>
                                             </a>

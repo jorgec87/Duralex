@@ -6,6 +6,9 @@
         
         //$id_usu=$_SESSION['id_cliente'];
         $error="";
+        
+         //   Imprimir parametros
+        print_r($_POST);
 
          // valida que todos los datos sean recibidos correctamente
         if(!isset($_POST['sel2'])) {
@@ -24,15 +27,18 @@
                 $error="Ocurrio un problema con la fecha";
         }else{
                 $fecha=$_POST['txtFecha'];
+                
         }
         
         if (!isset($_POST['timepicker'])) {
                 $error="Ocurrio un problema con la hora";
         }else{
                 $hora=$_POST['timepicker'];
+                $newDate = date("Y-m-d H:i:s", strtotime($fecha.' '.$hora));
         }
+        echo $newDate;
         
-        $fechaFinal = $fecha+''+$hora;
+        
         
         if($error !=""){
                 echo $error; 
@@ -48,12 +54,12 @@
                        ID_ESTADO=:ID_ESTADO"
                        ,true);
                $db->execute(array(
-                       ':FECHA_ATENCION' => $fechaFinal,
+                       ':FECHA_ATENCION' => $newDate,
                        ':VALOR' => 0,
-                       ':ID_CLIENTE' => $cliente,
-                       ':ID_ABOGADO' => $abogado,
+                       ':ID_CLIENTE' => $idCliente,
+                       ':ID_ABOGADO' => $idAbogado,
                        ':ID_ESTADO' => 1          
                ));           
-            header("location: ../index.php");
+            //header("location: ../index.php");
             }
 ?>
