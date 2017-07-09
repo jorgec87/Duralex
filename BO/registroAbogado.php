@@ -6,7 +6,8 @@
         
         //$id_usu=$_SESSION['id_cliente'];
         $error="";
-
+ //   Imprimir parametros
+        print_r($_POST);
          // valida que todos los datos sean recibidos correctamente
         if(!isset($_POST['txtNombre'])) {
                 $error="Ocurrio un problema con el nombre";
@@ -48,6 +49,7 @@
                 $error="Ocurrio un problema con la fecha";               
         }else{
                 $fecha=$_POST['txtFechaContrato'];
+                $newDate = date("y-m-d", strtotime($fecha));
         }
         if($error !=""){
                 echo $error; 
@@ -69,10 +71,10 @@
                        ':NOMBRE_ABO' => $nombre,
                        ':APELLIDOP_ABO' => $apellidoP,
                        ':APELLIDOM_ABO' => $apellidoM,
-                       ':FECHA_CONTRATO' => $fecha, 
+                       ':FECHA_CONTRATO' => $newDate, 
                        ':ESPECIALIDAD' => $especialidad,
                        ':VALOR_X_HORA' => $valor          
                ));           
-            header("location: ../index.php");
+           // header("location: ../index.php");
             }
 ?>

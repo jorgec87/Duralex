@@ -70,9 +70,10 @@ Class EasyDB {
 		if($statements===NULL){
 
 			try{
-				$result = $this->stmt->execute();
+			$result = $this->stmt->execute();
 			} catch (PDOException $e) {
 		    	$result = $e->getMessage();
+                            echo $e;
 			}
 			return $result;
 
@@ -80,9 +81,10 @@ Class EasyDB {
 		}else{
 
 			try{
-				$result = $this->stmt->execute($statements);
+			$result = $this->stmt->execute($statements);
 			} catch (PDOException $e) {
 		    	$result = $e->getMessage();
+                            echo $e;
 			}
 			return $result;
 

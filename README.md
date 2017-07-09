@@ -1,2 +1,0 @@
-# Duralex
-Web App PHP 

@@ -11,7 +11,7 @@
         
         
         // RUTA PATH DEL SERVIDOR
-        $puerto =82;
+        $puerto =80;
         $server ='http://localhost:'.$puerto.'/Duralex/';
         
         $conf['name_server'] = $server;
