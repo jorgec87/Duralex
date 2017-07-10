@@ -167,13 +167,13 @@ $sql_ABOGADOS = $db->get_results("SELECT * FROM duralex.ABOGADOS");
                                                                     <?php echo $abogado->VALOR_X_HORA; ?>
                                                                 </td>
                                                                 <td style="width: 15%;">
-                                                                        <a href="#" class="table-link">
+                                                                       <a href="actualizarAbogado.php?id=<?php echo $abogado->ID_ABOGADO; ?>" class="table-link">
                                                                             <span class="fa-stack">
                                                                                 <i class="fa fa-square fa-stack-2x"></i>
                                                                                 <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
                                                                             </span>
                                                                         </a>
-                                                                        <a href="#" class="table-link danger">
+                                                                        <a href="BO/eliminarAbogado.php?id=<?php echo $abogado->id; ?>" onclick="return confirm('¿Esta seguro de eliminar el abogado?')" class="table-link danger">
                                                                             <span class="fa-stack">
                                                                                 <i class="fa fa-square fa-stack-2x"></i>
                                                                                 <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>

@@ -4,13 +4,16 @@ require_once './EasyPDO/conexionPDO.php';
 
 //        Consulta a la tablas categoria
 
-$sql_ATENCIONES = $db->get_results("SELECT ID_ATENCION id,".
-"FECHA_ATENCION fecha,VALOR valor,".
-(SELECT concat(NOMBRE_CLI," ",APELLIDOP_CLI," ",APELLIDOM_CLI) FROM duralex.clientes where ID_CLIENTE=ID_CLIENTE) cliente,
-(SELECT concat(NOMBRE_ABO," ",APELLIDOP_ABO," ",APELLIDOM_ABO) FROM duralex.abogados where ID_ABOGADO=ID_ABOGADO) abogado,
-(SELECT DESCRIPCION FROM duralex.estados WHERE ID_ESTADO = ID_ESTADO) estado
-FROM duralex.atenciones;");
+$sql_ATENCIONES = $db->get_results("SELECT ID_ATENCION id,FECHA_ATENCION fecha,VALOR valor,".
+        "(SELECT NOMBRE_CLI FROM duralex.clientes where ID_CLIENTE=atenciones.ID_CLIENTE)nombre_cli,".
+        "(SELECT APELLIDOP_CLI FROM duralex.clientes where ID_CLIENTE=atenciones.ID_CLIENTE)apellidop_cli,". 
+        "(SELECT APELLIDOM_CLI FROM duralex.clientes where ID_CLIENTE=atenciones.ID_CLIENTE)apellidom_cli,".
+        "(SELECT NOMBRE_ABO FROM duralex.abogados where ID_ABOGADO=atenciones.ID_ABOGADO)nombre_abo,".
+        "(SELECT APELLIDOP_ABO FROM duralex.abogados where ID_ABOGADO=atenciones.ID_ABOGADO)apellidop_abo,". 
+        "(SELECT APELLIDOM_ABO FROM duralex.abogados where ID_ABOGADO=atenciones.ID_ABOGADO)apellidom_abo,". 
+        "(SELECT DESCRIPCION FROM duralex.estados WHERE ID_ESTADO = atenciones.ID_ESTADO)estado FROM duralex.ATENCIONES");
 
+$sql_ESTADOS = $db->get_results("SELECT * FROM ESTADOS"); 
 //         Fin consultas
 
 ?>
@@ -22,22 +25,38 @@ FROM duralex.atenciones;");
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
         <title>Duralex - Listar Atenciones</title>
-        <!-- bootstrap -->
-        <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.min.css" />
-        <!-- RTL support - for demo only -->
-        <script src="js/demo-rtl.js"></script>
-        <!-- libraries -->
-        <link rel="stylesheet" type="text/css" href="css/libs/font-awesome.css" />
-        <link rel="stylesheet" type="text/css" href="css/libs/nanoscroller.css" />
-        <!-- global styles -->
-        <link rel="stylesheet" type="text/css" href="css/compiled/theme_styles.css" />
-        <!-- this page specific styles -->
-        <link rel="stylesheet" href="css/libs/daterangepicker.css" type="text/css" />
-        <!-- Favicon -->
-        <link type="image/x-icon" href="favicon.png" rel="shortcut icon"/>
-        <!-- google font libraries -->
-        <link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700,300|Titillium+Web:200,300,400' rel='stylesheet' type='text/css'>
+	<!-- bootstrap -->
+	<link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.min.css" />
+	
+	<!-- RTL support - for demo only -->
+	<script src="js/demo-rtl.js"></script>
+	<!-- 
+	If you need RTL support just include here RTL CSS file <link rel="stylesheet" type="text/css" href="css/libs/bootstrap-rtl.min.css" />
+	And add "rtl" class to <body> element - e.g. <body class="rtl"> 
+	-->
+	
+	<!-- libraries -->
+	<link rel="stylesheet" type="text/css" href="css/libs/font-awesome.css" />
+	<link rel="stylesheet" type="text/css" href="css/libs/nanoscroller.css" />
 
+	<!-- global styles -->
+	<link rel="stylesheet" type="text/css" href="css/compiled/theme_styles.css" />
+
+	<!-- this page specific styles -->
+	<link rel="stylesheet" href="css/libs/datepicker.css" type="text/css" />
+	<link rel="stylesheet" href="css/libs/daterangepicker.css" type="text/css" />
+	<link rel="stylesheet" href="css/libs/bootstrap-timepicker.css" type="text/css" />
+	<link rel="stylesheet" href="css/libs/select2.css" type="text/css" />
+	
+	<!-- Favicon -->
+	<link type="image/x-icon" href="favicon.png" rel="shortcut icon"/>
+
+	<!-- google font libraries -->
+	<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700,300|Titillium+Web:200,300,400' rel='stylesheet' type='text/css'>
+
+        
+       
+        
     </head>
     <body>
         <div id="theme-wrapper">
@@ -121,7 +140,7 @@ FROM duralex.atenciones;");
                                         <li>
                                             <a href="listarAtenciones.php" class="active">
                                                 <i class="fa fa-dashboard"></i>
-                                                <span>Crear Atencion</span>
+                                                <span>Listar Atenciones</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -134,18 +153,18 @@ FROM duralex.atenciones;");
                             <div class="col-lg-10 col-lg-offset-1">
                                 <div class="main-box">
                                     <header class="main-box-header clearfix">
-                                        <h2>Registrar Abogado</h2>
+                                        <h2>Listado De Atenciones</h2>
                                     </header>
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="main-box clearfix">
                                                 <header class="main-box-header clearfix">
-                                                    <h2 class="pull-left">Abogados</h2>
+                                                    <h2 class="pull-left">Atenciones</h2>
 
                                                     <div class="filter-block pull-right">
 
-                                                        <a href="crearAbogado.php" class="btn btn-primary pull-right">
-                                                            <i class="fa fa-plus-circle fa-lg"></i> Registrar Abogado
+                                                        <a href="crearAtencion.php" class="btn btn-primary pull-right">
+                                                            <i class="fa fa-plus-circle fa-lg"></i> Registrar Atencion
                                                         </a>
                                                     </div>
                                                 </header>
@@ -155,47 +174,58 @@ FROM duralex.atenciones;");
                                                         <table class="table">
                                                             <thead>
                                                                 <tr>
-                                                                    <th class="text-left"><a><span>Rut</span></a></th>
-                                                                    <th class="text-left"><a><span>Nombre</span></a></th>
-                                                                    <th class="text-left"><a><span>Fecha De Contrato</span></a></th>
-                                                                    <th class="text-left"><a><span>Especialidad</span></a></th>
-                                                                    <th class="text-left"><a><span>Valor Por Hora</span></a></th>
+                                                                    <th class="text-left"><a><span>Fecha</span></a></th>
+                                                                    <th class="text-left"><a><span>Cliente</span></a></th>
+                                                                    <th class="text-left"><a><span>Abogado</span></a></th>
+                                                                    <th class="text-left"><a><span>Valor de Atencion</span></a></th>
+                                                                    <th class="text-left"><a><span>Estado</span></a></th>
+                                                                    <th class="text-left"><a><span>Cambiar Estado</span></a></th>
                                                                     <th>&nbsp;</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
                                                                  <?php
-                                                                foreach ($sql_ABOGADOS as $key => $abogado) 
+                                                                foreach ($sql_ATENCIONES as $key => $atencion) 
                                                                     {
-                                                                    ?>									
+                                                                    ?>
                                                                 <td class="text-left"> 
-                                                                    <?php echo $abogado->RUT_ABOGADO; ?>
+                                                                    <?php echo $atencion->fecha; ?>
                                                                 </td>
                                                                 <td class="text-left"> 
-                                                                    <?php echo $abogado->NOMBRE_ABO.' '.$abogado->APELLIDOP_ABO.' '.$abogado->APELLIDOM_ABO; ?>
+                                                                    <?php echo $atencion->nombre_cli.' '.$atencion->apellidop_cli.' '.$atencion->apellidom_cli; ?>
                                                                 </td>
                                                                 <td class="text-left"> 
-                                                                    <?php echo $abogado->FECHA_CONTRATO; ?>
+                                                                    <?php echo $atencion->nombre_abo.' '.$atencion->apellidop_abo.' '.$atencion->apellidom_abo; ?>
                                                                 </td>
                                                                 <td class="text-left"> 
-                                                                    <?php echo $abogado->ESPECIALIDAD; ?>
+                                                                    <?php echo $atencion->valor; ?>
                                                                 </td>
                                                                 <td class="text-left"> 
-                                                                    <?php echo $abogado->VALOR_X_HORA; ?>
+                                                                    <?php echo $atencion->estado; ?>
                                                                 </td>
-                                                                <td style="width: 15%;">
-                                                                        <a href="#" class="table-link">
+                                                                <td>    
+                                                                    <div class="form-group-select2">
+                                                                        <select style="width:170px" id="sel3" name="sel3">
+                                                                            <option value="0">Seleccione el estado</option>
+                                                                            <?php
+                                                                            foreach ($sql_ESTADOS as $key => $estado) {
+                                                                                ?>									
+                                                                                <option value="<?php echo $estado->ID_ESTADO; ?>"><?php echo $estado->DESCRIPCION; ?></option>
+                                                                                <?php
+                                                                            }
+                                                                            ?>
+                                                                       </select>
+                                                                    </div>
+                                                                </td>
+                                                                <td style="width: 5%;">
+                                                                        <a   onclick="ActualizarEstado(<?php echo $atencion->id;?>)" class="table-link danger">
                                                                             <span class="fa-stack">
                                                                                 <i class="fa fa-square fa-stack-2x"></i>
                                                                                 <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
                                                                             </span>
-                                                                        </a>
-                                                                        <a href="#" class="table-link danger">
-                                                                            <span class="fa-stack">
-                                                                                <i class="fa fa-square fa-stack-2x"></i>
-                                                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-                                                                            </span>
-                                                                        </a>
+                                                                        </a>    
+                                                            
+                                                                    
                                                                  </td>
                                                                 <?php
                                                                     }
@@ -243,10 +273,26 @@ FROM duralex.atenciones;");
         <script src="js/pace.min.js"></script>
 
 <!-- this page specific inline scripts -->
-
+	
 
     </body>
 </html>
 
-
+ <script>
+	$(function($) {	               
+                //nice select boxes
+                $('#sel3').select2();                              
+	});
+        
+      
+            window.ActualizarEstado =  function(id){
+               if (confirm("Esta seguro de actualizar el estado?")) 
+               {
+    window.location.href = "/Duralex/BO/cambiarEstadoAtencion.php?id="+$('select[name=sel3]').val()+"&idAtencion="+id;
+} 
+               
+              
+             }   
+	</script>
+        
 						
