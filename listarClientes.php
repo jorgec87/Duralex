@@ -1,5 +1,5 @@
 <?php
-//require_once './include/include_valida_session.php';
+ require_once './include/include_valida_session.php';
 require_once './EasyPDO/conexionPDO.php';
 
 //        Consulta a la tablas categoria
@@ -38,7 +38,7 @@ $sql_clientes = $db->get_results("SELECT * FROM duralex.clientes");
         <div id="theme-wrapper">
             <header class="navbar" id="header-navbar">
                 <div class="container">
-                    <a href="index.html" id="logo" class="navbar-brand">
+                    <a href="index.php" id="logo" class="navbar-brand">
                         <label>DURALEX</label>
                     </a>
 
@@ -61,7 +61,7 @@ $sql_clientes = $db->get_results("SELECT * FROM duralex.clientes");
                         <div class="nav-no-collapse pull-right" id="header-nav">
                             <ul class="nav navbar-nav pull-right">
                                 <li class="hidden-xxs">
-                                    <a class="btn">
+                                    <a href="BO/cerrarSesion.php" class="btn">
                                         <i class="fa fa-power-off"></i>
                                     </a>
                                 </li>
@@ -73,14 +73,14 @@ $sql_clientes = $db->get_results("SELECT * FROM duralex.clientes");
             <div id="page-wrapper" class="container">
                 <div class="row">
                     <div id="nav-col">
-                        <section id="col-left" class="col-left-nano">
+                       <section id="col-left" class="col-left-nano">
                             <div id="col-left-inner" class="col-left-nano-content">
                                 <div id="user-left-box" class="clearfix hidden-sm hidden-xs">
-                                    <img alt="" src="img/samples/scarlet-159.png" />
+                                    <img src="img/icon-user.png" alt=""/>
                                     <div class="user-box">
                                         <span class="name">
-                                            Welcome<br/>
-                                            Scarlett
+                                            Bienvenido<br/>
+                                           <?php echo $_SESSION['nombre']." ".$_SESSION['apellido_paterno'];?> 
                                         </span>
                                         <span class="status">
                                             <i class="fa fa-circle"></i> Online
@@ -90,23 +90,44 @@ $sql_clientes = $db->get_results("SELECT * FROM duralex.clientes");
                                 <div class="collapse navbar-collapse navbar-ex1-collapse" id="sidebar-nav">	
                                     <ul class="nav nav-pills nav-stacked">
                                         <li>
-                                            <a href="index.html">
+                                            <a href="index.php" class="active">
                                                 <i class="fa fa-dashboard"></i>
-                                                <span>Dashboard</span>
+                                                <span>Inicio</span>
                                             </a>
                                         </li>
-                                        <li>
-                                            <a href="crearAbogado.php" class="active">
-                                                <i class="fa fa-dashboard"></i>
-                                                <span>Agregar Abogado</span>
+                                        
+                                        <li class="open active">
+                                            <a href="#" class="dropdown-toggle">
+                                                <i class="fa fa-table"></i>
+                                                <span>Administrar</span>
+                                                <i class="fa fa-chevron-circle-right drop-icon"></i>
                                             </a>
+                                            <ul class="submenu" style="display: block;">
+                                                <li class="active">
+                                                    <a href="listarClientes.php">
+                                                        Clientes
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="listarAbogados.php">
+                                                        Abogados
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="listarAtenciones.php">
+                                                        Atenciones
+                                                    </a>
+                                                </li>
+                                                   <?php if($_SESSION['tipo']!= 1 && $_SESSION['tipo']!= 3){ ?>
+                                                   <li>
+                                                     <a href="listarUsuarios.php">
+                                                        Usuarios
+                                                    </a>
+                                                </li>
+                                                <?php } ?> 
+                                            </ul>
                                         </li>
-                                        <li>
-                                            <a href="crearAtencion.php" class="active">
-                                                <i class="fa fa-dashboard"></i>
-                                                <span>Crear Atencion</span>
-                                            </a>
-                                        </li>
+
                                     </ul>
                                 </div>
                             </div>
@@ -123,11 +144,14 @@ $sql_clientes = $db->get_results("SELECT * FROM duralex.clientes");
                                         <div class="col-lg-12">
                                             <div class="main-box clearfix">
                                                 <header class="main-box-header clearfix">
-                                                  <div class="filter-block pull-right">
-                                                      <a href="crearCliente.php" class="btn btn-primary pull-right">
-                                                            <i class="fa fa-plus-circle fa-lg"></i> Agregar Cliente
-                                                        </a>
-                                                    </div>
+                                                    <?php if($_SESSION['tipo']!= 1&& $_SESSION['tipo']!= 3){ ?>
+                                                      <div class="filter-block pull-right">
+                                                            <a href="crearCliente.php" class="btn btn-primary pull-right">
+                                                                <i class="fa fa-plus-circle fa-lg"></i> Agregar Cliente
+                                                            </a>
+                                                      </div>
+                                                    <?php } ?>   
+                                                 
                                                 </header>
 
                                                 <div class="main-box-body clearfix">
@@ -140,7 +164,9 @@ $sql_clientes = $db->get_results("SELECT * FROM duralex.clientes");
                                                                     <th class="text-left"><a><span>Tipo de persona</span></a></th>
                                                                     <th class="text-left"><a><span>Fecha de registro</span></a></th>
                                                                     <th class="text-left"><a><span>Teléfono</span></a></th>
-                                                                     <th class="text-left"><a><span>Acción</span></a></th>
+                                                                     <?php if($_SESSION['tipo']!= 1 && $_SESSION['tipo']!= 3){ ?>
+                                                                    <th class="text-left"><a><span>Acción</span></a></th>
+                                                                  <?php } ?>   
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -171,6 +197,8 @@ $sql_clientes = $db->get_results("SELECT * FROM duralex.clientes");
                                                                  <td class="text-left"> 
                                                                     <?php echo $cliente->TELEFONO; ?>
                                                                 </td>
+                                                                
+                                                                <?php if($_SESSION['tipo']!= 1 && $_SESSION['tipo']!= 3){ ?>
                                                                 <td style="width: 15%;">
                                                                     <a href="actualizarCliente.php?id=<?php echo $cliente->ID_CLIENTE; ?>" class="table-link">
                                                                             <span class="fa-stack">
@@ -185,6 +213,9 @@ $sql_clientes = $db->get_results("SELECT * FROM duralex.clientes");
                                                                             </span>
                                                                         </a>
                                                                  </td>
+                                                                  <?php
+                                                                    }
+                                                                 ?>   
                                                                  </tr>
                                                                 <?php
                                                                     }

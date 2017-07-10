@@ -1,5 +1,5 @@
 <?php
-//require_once './include/include_valida_session.php';
+require_once './include/include_valida_session.php';
 require_once './EasyPDO/conexionPDO.php';
 
 //        Consulta a la tablas categoria
@@ -73,14 +73,14 @@ $sql_ABOGADOS = $db->get_results("SELECT * FROM duralex.ABOGADOS");
             <div id="page-wrapper" class="container">
                 <div class="row">
                     <div id="nav-col">
-                        <section id="col-left" class="col-left-nano">
+                         <section id="col-left" class="col-left-nano">
                             <div id="col-left-inner" class="col-left-nano-content">
                                 <div id="user-left-box" class="clearfix hidden-sm hidden-xs">
-                                    <img alt="" src="img/samples/scarlet-159.png" />
+                                    <img src="img/icon-user.png" alt=""/>
                                     <div class="user-box">
                                         <span class="name">
-                                            Welcome<br/>
-                                            Scarlett
+                                            Bienvenido<br/>
+                                           <?php echo $_SESSION['nombre']." ".$_SESSION['apellido_paterno'];?> 
                                         </span>
                                         <span class="status">
                                             <i class="fa fa-circle"></i> Online
@@ -90,23 +90,44 @@ $sql_ABOGADOS = $db->get_results("SELECT * FROM duralex.ABOGADOS");
                                 <div class="collapse navbar-collapse navbar-ex1-collapse" id="sidebar-nav">	
                                     <ul class="nav nav-pills nav-stacked">
                                         <li>
-                                            <a href="index.html">
+                                            <a href="index.php" class="active">
                                                 <i class="fa fa-dashboard"></i>
-                                                <span>Dashboard</span>
+                                                <span>Inicio</span>
                                             </a>
                                         </li>
-                                        <li>
-                                            <a href="crearAbogado.php" class="active">
-                                                <i class="fa fa-dashboard"></i>
-                                                <span>Agregar Abogado</span>
+                                        
+                                        <li class="open active">
+                                            <a href="#" class="dropdown-toggle">
+                                                <i class="fa fa-table"></i>
+                                                <span>Administrar</span>
+                                                <i class="fa fa-chevron-circle-right drop-icon"></i>
                                             </a>
+                                            <ul class="submenu" style="display: block;">
+                                                <li >
+                                                    <a href="listarClientes.php">
+                                                        Clientes
+                                                    </a>
+                                                </li>
+                                                <li class="active">
+                                                    <a href="listarAbogados.php">
+                                                        Abogados
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="listarAtenciones.php">
+                                                        Atenciones
+                                                    </a>
+                                                </li>
+                                                    <?php if($_SESSION['tipo']!= 1&& $_SESSION['tipo']!= 3){ ?>
+                                                   <li>
+                                                     <a href="listarUsuarios.php">
+                                                        Usuarios
+                                                    </a>
+                                                </li>
+                                                <?php } ?> 
+                                            </ul>
                                         </li>
-                                        <li>
-                                            <a href="crearAtencion.php" class="active">
-                                                <i class="fa fa-dashboard"></i>
-                                                <span>Crear Atencion</span>
-                                            </a>
-                                        </li>
+
                                     </ul>
                                 </div>
                             </div>
@@ -124,13 +145,15 @@ $sql_ABOGADOS = $db->get_results("SELECT * FROM duralex.ABOGADOS");
                                             <div class="main-box clearfix">
                                                 <header class="main-box-header clearfix">
                                                     <h2 class="pull-left">Abogados</h2>
-
-                                                    <div class="filter-block pull-right">
+                                                    <?php if($_SESSION['tipo']!= 1 && $_SESSION['tipo']!= 3){ ?>
+                                                      <div class="filter-block pull-right">
 
                                                         <a href="crearAbogado.php" class="btn btn-primary pull-right">
                                                             <i class="fa fa-plus-circle fa-lg"></i> Registrar Abogado
                                                         </a>
                                                     </div>
+                                                    <?php } ?> 
+                                                    
                                                 </header>
 
                                                 <div class="main-box-body clearfix">
@@ -166,6 +189,7 @@ $sql_ABOGADOS = $db->get_results("SELECT * FROM duralex.ABOGADOS");
                                                                 <td class="text-left"> 
                                                                     <?php echo $abogado->VALOR_X_HORA; ?>
                                                                 </td>
+                                                                <?php if($_SESSION['tipo']!= 1 && $_SESSION['tipo']!= 3){ ?>
                                                                 <td style="width: 15%;">
                                                                        <a href="actualizarAbogado.php?id=<?php echo $abogado->ID_ABOGADO; ?>" class="table-link">
                                                                             <span class="fa-stack">
@@ -180,6 +204,10 @@ $sql_ABOGADOS = $db->get_results("SELECT * FROM duralex.ABOGADOS");
                                                                             </span>
                                                                         </a>
                                                                  </td>
+                                                                  <?php
+                                                                    }
+                                                                 ?>   
+                                                                
                                                                 <?php
                                                                     }
                                                                 ?>                                                              

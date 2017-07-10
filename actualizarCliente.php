@@ -1,6 +1,6 @@
 <?php
 require_once './EasyPDO/conexionPDO.php';
-
+require_once './include/include_valida_session.php';
 
 if(!isset($_GET['id'])) {
     echo "Ocurrio un problema con el id";
@@ -62,8 +62,8 @@ if(!isset($_GET['id'])) {
 
                         <div class="nav-no-collapse pull-right" id="header-nav">
                             <ul class="nav navbar-nav pull-right">
-                                <li class="hidden-xxs">
-                                    <a class="btn">
+                                 <li class="hidden-xxs">
+                                    <a href="BO/cerrarSesion.php" class="btn">
                                         <i class="fa fa-power-off"></i>
                                     </a>
                                 </li>
@@ -75,14 +75,14 @@ if(!isset($_GET['id'])) {
             <div id="page-wrapper" class="container">
                 <div class="row">
                     <div id="nav-col">
-                        <section id="col-left" class="col-left-nano">
+                         <section id="col-left" class="col-left-nano">
                             <div id="col-left-inner" class="col-left-nano-content">
                                 <div id="user-left-box" class="clearfix hidden-sm hidden-xs">
-                                    <img alt="" src="img/samples/scarlet-159.png" />
+                                    <img src="img/icon-user.png" alt=""/>
                                     <div class="user-box">
                                         <span class="name">
-                                            Welcome<br/>
-                                            Scarlett
+                                            Bienvenido<br/>
+                                           <?php echo $_SESSION['nombre']." ".$_SESSION['apellido_paterno'];?> 
                                         </span>
                                         <span class="status">
                                             <i class="fa fa-circle"></i> Online
@@ -92,23 +92,44 @@ if(!isset($_GET['id'])) {
                                 <div class="collapse navbar-collapse navbar-ex1-collapse" id="sidebar-nav">	
                                     <ul class="nav nav-pills nav-stacked">
                                         <li>
-                                            <a href="index.html">
+                                            <a href="index.php" class="active">
                                                 <i class="fa fa-dashboard"></i>
-                                                <span>Dashboard</span>
+                                                <span>Inicio</span>
                                             </a>
                                         </li>
-                                        <li>
-                                            <a href="crearAbogado.php" class="active">
-                                                <i class="fa fa-dashboard"></i>
-                                                <span>Agregar Abogado</span>
+                                        
+                                        <li class="open">
+                                            <a href="#" class="dropdown-toggle">
+                                                <i class="fa fa-table"></i>
+                                                <span>Administrar</span>
+                                                <i class="fa fa-chevron-circle-right drop-icon"></i>
                                             </a>
+                                            <ul class="submenu" style="display: block;">
+                                                <li class="active">
+                                                    <a href="listarClientes.php">
+                                                        Clientes
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="listarAbogados.php">
+                                                        Abogados
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="listarAtenciones.php">
+                                                        Atenciones
+                                                    </a>
+                                                </li>
+                                                   <?php if($_SESSION['tipo']!= 1 && $_SESSION['tipo']!= 3){ ?>
+                                                   <li>
+                                                     <a href="listarUsuarios.php">
+                                                        Usuarios
+                                                    </a>
+                                                </li>
+                                                <?php } ?> 
+                                            </ul>
                                         </li>
-                                        <li>
-                                            <a href="crearAtencion.php" class="active">
-                                                <i class="fa fa-dashboard"></i>
-                                                <span>Crear Atencion</span>
-                                            </a>
-                                        </li>
+
                                     </ul>
                                 </div>
                             </div>
@@ -163,7 +184,7 @@ if(!isset($_GET['id'])) {
                                                     </label>
                                                 </div>
                                             </div>
-                                           <div class="form-group col-md-3 col-md-offset-2">
+                                           <div class="form-group col-md-6">
                                                <button type="submit" class="btn  btn-success">Registrar</button>&nbsp&nbsp&nbsp
                                                <a class="btn  btn-warning" href="listarClientes.php">Volver</a>
                                         </form>

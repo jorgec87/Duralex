@@ -1,5 +1,5 @@
 <?php
-//require_once './include/include_valida_session.php';
+require_once './include/include_valida_session.php';
 require_once './EasyPDO/conexionPDO.php';
 
 //        Consulta a la tablas categoria
@@ -85,7 +85,7 @@ $sql_ESTADOS = $db->get_results("SELECT * FROM ESTADOS");
                         <div class="nav-no-collapse pull-right" id="header-nav">
                             <ul class="nav navbar-nav pull-right">
                                 <li class="hidden-xxs">
-                                    <a class="btn">
+                                    <a href="BO/cerrarSesion.php" class="btn">
                                         <i class="fa fa-power-off"></i>
                                     </a>
                                 </li>
@@ -97,14 +97,14 @@ $sql_ESTADOS = $db->get_results("SELECT * FROM ESTADOS");
             <div id="page-wrapper" class="container">
                 <div class="row">
                     <div id="nav-col">
-                        <section id="col-left" class="col-left-nano">
+                       <section id="col-left" class="col-left-nano">
                             <div id="col-left-inner" class="col-left-nano-content">
                                 <div id="user-left-box" class="clearfix hidden-sm hidden-xs">
-                                    <img alt="" src="img/samples/scarlet-159.png" />
+                                    <img src="img/icon-user.png" alt=""/>
                                     <div class="user-box">
                                         <span class="name">
-                                            Welcome<br/>
-                                            Scarlett
+                                            Bienvenido<br/>
+                                           <?php echo $_SESSION['nombre']." ".$_SESSION['apellido_paterno'];?> 
                                         </span>
                                         <span class="status">
                                             <i class="fa fa-circle"></i> Online
@@ -114,35 +114,48 @@ $sql_ESTADOS = $db->get_results("SELECT * FROM ESTADOS");
                                 <div class="collapse navbar-collapse navbar-ex1-collapse" id="sidebar-nav">	
                                     <ul class="nav nav-pills nav-stacked">
                                         <li>
-                                            <a href="index.html">
+                                            <a href="index.php" class="active">
                                                 <i class="fa fa-dashboard"></i>
-                                                <span>Dashboard</span>
+                                                <span>Inicio</span>
                                             </a>
                                         </li>
-                                        <li>
-                                            <a href="crearAbogado.php">
-                                                <i class="fa fa-dashboard"></i>
-                                                <span>Agregar Abogado</span>
+                                        
+                                        <li class="open active">
+                                            <a href="#" class="dropdown-toggle">
+                                                <i class="fa fa-table"></i>
+                                                <span>Administrar</span>
+                                                <i class="fa fa-chevron-circle-right drop-icon"></i>
                                             </a>
+                                             <ul class="submenu">
+                                                     <?php if($_SESSION['tipo']!= 4){ ?>
+                                                   <li>
+                                                    <a href="listarClientes.php">
+                                                        Clientes
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="listarAbogados.php">
+                                                        Abogados
+                                                    </a>
+                                                </li>
+                                               
+                                                <?php } ?> 
+                                                <li class="active">
+                                                    <a href="listarAtenciones.php">
+                                                        Atenciones
+                                                    </a>
+                                                </li>
+                                               
+                                                    <?php if($_SESSION['tipo']!= 1 && $_SESSION['tipo']!= 3 && $_SESSION['tipo']!= 4){ ?>
+                                                   <li>
+                                                     <a href="listarUsuarios.php">
+                                                        Usuarios
+                                                    </a>
+                                                </li>
+                                                <?php } ?> 
+                                            </ul>
                                         </li>
-                                        <li>
-                                            <a href="listarAbogados.php">
-                                                <i class="fa fa-dashboard"></i>
-                                                <span>Agregar Abogado</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="crearAtencion.php">
-                                                <i class="fa fa-dashboard"></i>
-                                                <span>Crear Atencion</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="listarAtenciones.php" class="active">
-                                                <i class="fa fa-dashboard"></i>
-                                                <span>Listar Atenciones</span>
-                                            </a>
-                                        </li>
+
                                     </ul>
                                 </div>
                             </div>
@@ -160,13 +173,15 @@ $sql_ESTADOS = $db->get_results("SELECT * FROM ESTADOS");
                                             <div class="main-box clearfix">
                                                 <header class="main-box-header clearfix">
                                                     <h2 class="pull-left">Atenciones</h2>
-
-                                                    <div class="filter-block pull-right">
+                                                    <?php if($_SESSION['tipo']!= 1 && $_SESSION['tipo']!= 4){ ?>
+                                                       <div class="filter-block pull-right">
 
                                                         <a href="crearAtencion.php" class="btn btn-primary pull-right">
                                                             <i class="fa fa-plus-circle fa-lg"></i> Registrar Atencion
                                                         </a>
                                                     </div>
+                                                    <?php } ?> 
+                                                   
                                                 </header>
 
                                                 <div class="main-box-body clearfix">
@@ -179,15 +194,18 @@ $sql_ESTADOS = $db->get_results("SELECT * FROM ESTADOS");
                                                                     <th class="text-left"><a><span>Abogado</span></a></th>
                                                                     <th class="text-left"><a><span>Valor de Atencion</span></a></th>
                                                                     <th class="text-left"><a><span>Estado</span></a></th>
+                                                                     <?php if($_SESSION['tipo']!= 1 && $_SESSION['tipo']!= 4){ ?>
                                                                     <th class="text-left"><a><span>Cambiar Estado</span></a></th>
+                                                                  <?php } ?> 
                                                                     <th>&nbsp;</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
                                                                  <?php
                                                                 foreach ($sql_ATENCIONES as $key => $atencion) 
-                                                                    {
+                                                                { 
                                                                     ?>
+                                                                 <tr>
                                                                 <td class="text-left"> 
                                                                     <?php echo $atencion->fecha; ?>
                                                                 </td>
@@ -203,7 +221,8 @@ $sql_ESTADOS = $db->get_results("SELECT * FROM ESTADOS");
                                                                 <td class="text-left"> 
                                                                     <?php echo $atencion->estado; ?>
                                                                 </td>
-                                                                <td>    
+                                                                 <?php if($_SESSION['tipo']!= 1 && $_SESSION['tipo']!= 4){ ?>
+                                                                 <td>    
                                                                     <div class="form-group-select2">
                                                                         <select style="width:170px" id="sel3" name="sel3">
                                                                             <option value="0">Seleccione el estado</option>
@@ -227,6 +246,11 @@ $sql_ESTADOS = $db->get_results("SELECT * FROM ESTADOS");
                                                             
                                                                     
                                                                  </td>
+                                                                  <?php
+                                                                    }
+                                                                 ?>   
+                                                               
+                                                                 </tr>
                                                                 <?php
                                                                     }
                                                                 ?>                                                              
@@ -281,7 +305,9 @@ $sql_ESTADOS = $db->get_results("SELECT * FROM ESTADOS");
  <script>
 	$(function($) {	               
                 //nice select boxes
-                $('#sel3').select2();                              
+                
+                $('#sel3').select2();      
+                
 	});
         
       
