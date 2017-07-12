@@ -110,6 +110,6 @@
                        ':TIPO_PERSONA' => $tipo 
                ));       
                
-              header("location: ../listarClientes.php"); 
+              header("location: ../listarClientes.php?res=1"); 
             }
 ?>

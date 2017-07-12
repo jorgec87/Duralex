@@ -156,7 +156,7 @@ require_once './include/include_valida_session.php';
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label>Valor Por Hora</label>
-                                                <input type="text" class="form-control" id="txtValor" name="txtValor" placeholder="Ingrese rut sin numero verificador">
+                                                <input type="text" class="form-control" id="txtValor" name="txtValor" placeholder="Ingrese valor">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label>Fecha De Contrato</label>
@@ -203,6 +203,11 @@ require_once './include/include_valida_session.php';
         <script src="js/hogan.js"></script>
         <script src="js/typeahead.min.js"></script>
         <script src="js/jquery.pwstrength.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
+     <!-- Jquery Rut -->
+    <script src="js/jquery.Rut.js" type="text/javascript"></script>
+     <!-- Toastr -->
+    <script src="js/toastr.min.js"></script>
 
         <!-- theme scripts -->
         <script src="js/scripts.js"></script>
@@ -220,3 +225,82 @@ require_once './include/include_valida_session.php';
 
     </body>
 </html>
+<script>
+$( document ).ready(function() {
+    
+    jQuery.extend(jQuery.validator.messages, {
+  required: "Este campo es obligatorio.",
+  remote: "Por favor, rellena este campo.",
+  email: "Por favor, escribe una dirección de correo válida",
+  url: "Por favor, escribe una URL válida.",
+  date: "Por favor, escribe una fecha válida.",
+  dateISO: "Por favor, escribe una fecha (ISO) válida.",
+  number: "Por favor, escribe un número entero válido.",
+  digits: "Por favor, escribe sólo dígitos.",
+  creditcard: "Por favor, escribe un número de tarjeta válido.",
+  equalTo: "Por favor, escribe el mismo valor de nuevo.",
+  accept: "Por favor, escribe un valor con una extensión aceptada.",
+  maxlength: jQuery.validator.format("Por favor, no escribas más de {0} caracteres."),
+  minlength: jQuery.validator.format("Por favor, no escribas menos de {0} caracteres."),
+  rangelength: jQuery.validator.format("Por favor, escribe un valor entre {0} y {1} caracteres."),
+  range: jQuery.validator.format("Por favor, escribe un valor entre {0} y {1}."),
+  max: jQuery.validator.format("Por favor, escribe un valor menor o igual a {0}."),
+  min: jQuery.validator.format("Por favor, escribe un valor mayor o igual a {0}.")
+});
+
+
+    
+
+     
+  //Agregar validacion de rut a Jquery validate
+            jQuery.validator.addMethod("Rut", function(value, element){
+             if ($.Rut.validar(value)) {
+                 return true;
+             } else {
+                 return false;
+             };
+                }, "El RUT ingresado no es válido"); 
+          
+            //funcion que valida campos
+            $("#form_abogado").validate({
+                rules: {
+                    txtRut: {
+                        required: true,
+                         Rut : true,
+                        number:true
+                    },
+                    txtEspecialidad: {
+                        required: true,
+                         minlength: 4
+                    },
+                    txtNombre:{
+                        required: true
+                         
+                    },
+                    txtApellidoP:{
+                        required: true
+                         
+                    },
+                    txtApellidoM:{
+                        required: true
+                         
+                    },
+                    txtValor:{
+                        required: true,
+                         number:true
+                    },
+                    txtFechaContrato:{
+                        required: true,
+                    }
+                    
+                    
+                    
+        }
+            });
+    
+    
+   });
+   
+    
+
+</script> 

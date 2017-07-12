@@ -30,6 +30,8 @@
                 
         }
         
+        
+        
         if (!isset($_POST['timepicker'])) {
                 $error="Ocurrio un problema con la hora";
         }else{
@@ -60,6 +62,6 @@
                        ':ID_ABOGADO' => $idAbogado,
                        ':ID_ESTADO' => 1          
                ));           
-            //header("location: ../index.php");
+            header("location: ../listarAtenciones.php?res=1");
             }
 ?>

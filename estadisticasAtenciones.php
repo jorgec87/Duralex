@@ -1,15 +1,10 @@
 <?php
 require_once './EasyPDO/conexionPDO.php';
+require_once './include/include_valida_session.php';
 
 //        Consulta a la tablas categoria
 
-$sql_ESTADISTICAS = $db->get_results("Select count(atenciones.ID_ATENCION) as ATENCIONES, CONCAT('$',SUM(atenciones.VALOR)) as TOTAL,".
-"CONCAT(abogados.NOMBRE_ABO,' ',abogados.APELLIDOP_ABO,' ',abogados.APELLIDOM_ABO) as ABOGADO, ".
-"abogados.ESPECIALIDAD as ESPECIALIDAD,estados.DESCRIPCION as ESTADO From atenciones ".
-"JOIN abogados on abogados.ID_ABOGADO=atenciones.ID_ABOGADO ".
-"JOIN estados on estados.ID_ESTADO=atenciones.ID_ESTADO".
-" WHERE atenciones.ID_ESTADO=5 AND atenciones.FECHA_ATENCION BETWEEN '2017-07-04' AND '2017-07-12' AND abogados.ESPECIALIDAD='Civil'".
-" OR atenciones.ID_ESTADO=5 AND atenciones.FECHA_ATENCION  BETWEEN '2017-07-04' AND '2017-07-12' AND abogados.RUT_ABOGADO='16368450';");
+
 
 $sql_ABOGADOS = $db->get_results("SELECT * FROM ABOGADOS"); 
 
@@ -101,11 +96,11 @@ $sql_ESTADOS = $db->get_results("SELECT * FROM ESTADOS");
                        <section id="col-left" class="col-left-nano">
                             <div id="col-left-inner" class="col-left-nano-content">
                                 <div id="user-left-box" class="clearfix hidden-sm hidden-xs">
-                                    <img src="img/icon-user.png" alt=""/>
+                                     <i class="fa fa-user  fa-5x" style="color: #fff"></i>
                                     <div class="user-box">
                                         <span class="name">
                                             Bienvenido<br/>
-                                           <?php //echo $_SESSION['nombre']." ".$_SESSION['apellido_paterno'];?> 
+                                           <?php echo $_SESSION['nombre']." ".$_SESSION['apellido_paterno'];?> 
                                         </span>
                                         <span class="status">
                                             <i class="fa fa-circle"></i> Online
@@ -114,21 +109,21 @@ $sql_ESTADOS = $db->get_results("SELECT * FROM ESTADOS");
                                 </div>
                                 <div class="collapse navbar-collapse navbar-ex1-collapse" id="sidebar-nav">	
                                     <ul class="nav nav-pills nav-stacked">
-                                        <li>
-                                            <a href="index.php" class="active">
+                                        <li >
+                                            <a href="index.php" >
                                                 <i class="fa fa-dashboard"></i>
                                                 <span>Inicio</span>
                                             </a>
                                         </li>
                                         
-                                        <li class="open active">
+                                        <li >
                                             <a href="#" class="dropdown-toggle">
                                                 <i class="fa fa-table"></i>
                                                 <span>Administrar</span>
                                                 <i class="fa fa-chevron-circle-right drop-icon"></i>
                                             </a>
-                                             <ul class="submenu">
-                                                     <?php //if($_SESSION['tipo']!= 4){ ?>
+                                            <ul class="submenu">
+                                                     <?php if($_SESSION['tipo']!= 4){ ?>
                                                    <li>
                                                     <a href="listarClientes.php">
                                                         Clientes
@@ -140,23 +135,45 @@ $sql_ESTADOS = $db->get_results("SELECT * FROM ESTADOS");
                                                     </a>
                                                 </li>
                                                
-                                                <?php //} ?> 
-                                                <li class="active">
+                                                <?php } ?> 
+                                                 <li>
                                                     <a href="listarAtenciones.php">
                                                         Atenciones
                                                     </a>
                                                 </li>
                                                
-                                                    <?php //if($_SESSION['tipo']!= 1 && $_SESSION['tipo']!= 3 && $_SESSION['tipo']!= 4){ ?>
+                                                    <?php if($_SESSION['tipo']!= 1 && $_SESSION['tipo']!= 3 && $_SESSION['tipo']!= 4){ ?>
                                                    <li>
                                                      <a href="listarUsuarios.php">
                                                         Usuarios
                                                     </a>
                                                 </li>
-                                                <?php //} ?> 
+                                                <?php } ?> 
                                             </ul>
                                         </li>
-
+                                        <?php if($_SESSION['tipo']== 1 || $_SESSION['tipo']== 2){ ?>
+                                        <li class="active">
+                                            <a href="#" class="dropdown-toggle">
+                                                <i class="fa fa-bar-chart-o"></i>
+                                                <span>Estadistica</span>
+                                                <i class="fa fa-chevron-circle-right drop-icon"></i>
+                                            </a>
+                                            <ul class="submenu">
+                                                  
+                                                <li class="active">
+                                                    <a href="estadisticasAtenciones.php">
+                                                        Atenciones
+                                                    </a>
+                                                </li>
+                                                
+                                                <li >
+                                                    <a href="estadisticaClientes.php">
+                                                        Clientes
+                                                        </a>
+                                                </li>        
+                                            </ul>
+                                        </li>
+                                        <?php } ?> 
                                     </ul>
                                 </div>
                             </div>

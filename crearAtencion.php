@@ -156,7 +156,7 @@ $sql_CLIENTES = $db->get_results("SELECT * FROM duralex.CLIENTES");
                                     </header>
                                     <div class="main-box-body clearfix">
                                         <form id="form_abogado" method="POST" enctype="multipart/form-data" action="BO/registroAtencion.php">
-                                             <div class="form-group form-group-select2">
+                                             <div class="form-group form-group-select2 col-md-6">
                                                 <label>Abogado</label>
                                                 <select style="width:300px" id="sel2" name="sel2">
                                                     <option value="">Seleccione el abogado</option>
@@ -169,7 +169,7 @@ $sql_CLIENTES = $db->get_results("SELECT * FROM duralex.CLIENTES");
                                                     ?>
                                                 </select>
                                             </div>
-                                            <div class="form-group form-group-select2">
+                                            <div class="form-group col-md-6 form-group-select2">
                                                 <label>Cliente</label>
                                                 <select style="width:300px" id="sel3" name="sel3">
                                                     <option value="">Seleccione el cliente</option>
@@ -246,7 +246,8 @@ $sql_CLIENTES = $db->get_results("SELECT * FROM duralex.CLIENTES");
 	$(function($) {	
 		//datepicker
 		$('#txtFecha').datepicker({
-		  format: 'dd-mm-yyyy'
+		  format: 'dd-mm-yyyy',
+                   autoclose: true
 		});
                 
                 //nice select boxes

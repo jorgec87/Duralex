@@ -66,10 +66,41 @@
 			$_SESSION['tipo']=$id_tipo_usuario;
 			
 			
-			//Se redirecciona al index
+                      
 			header("location: ../index.php?res=1");
-                       // AvisosClasificados/BO/index.php?error=1			
-		}
+                      
+      
+                      
+ 
+//                   for ($index = 0;$index < 200;$index++) {
+//                        $index--;
+//                        
+//                         $now = time();
+//                      while ($now + 30000 > time()) {
+//       
+//                       }
+//                     try {
+//                         $sql_anulados = $db->get_results("select ID_ATENCION from duralex.atenciones where FECHA_ATENCION < DATE_ADD(NOW(),INTERVAL 24 HOUR) and ID_ESTADO = 1");
+//                     
+//                       foreach ($sql_anulados as $key => $anular) {
+//    		
+//                      $db->prepare("update duralex.atenciones set ID_ESTADO = 3 where ID_ATENCION =:id",true);
+//		        $db->execute(array(
+//			':id' => $anular->ID_ATENCION
+//                        )); 
+//                    } 
+//                     } catch (Exception $ex) {
+//                      echo $ex;
+//                     }
+//                  
+//                    }
+                    
+                    
+         
+                     
+        }
+                
+                
 	}
 
 ?>

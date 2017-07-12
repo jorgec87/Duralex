@@ -75,6 +75,6 @@
                        ':ID_TIPO_USUARIO' => $tipo_usuario       
                ));       
                
-            header("location: ../listarUsuarios.php"); 
+            header("location: ../listarUsuarios.php?res=1"); 
             }
 ?>

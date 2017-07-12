@@ -7894,3 +7894,12 @@ svg {
     background-color: #1abc9c;
   }
 }
+
+ .form-control.error {
+             border: 1px dotted #cc5965;
+            }
+            label.error {
+            color: #cc5965;
+            display: inline-block;
+            margin-left: 5px;
+           }

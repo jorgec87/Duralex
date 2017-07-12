@@ -25,4 +25,4 @@
 	)
         );
         
-        header("location: ../listarAtenciones.php"); 
+        header("location: ../listarAtenciones.php?res=2"); 

@@ -33,10 +33,10 @@
                 $rut=$_POST['txtRut'];
         }
 
-        if (!isset($_POST['txtEspecialidad'])) {
+        if (!isset($_POST['ddlEspecialidad'])) {
                 $error="Ocurrio un problema con la especialidad";
         }else{
-                $especialidad=$_POST['txtEspecialidad'];
+                $especialidad=$_POST['ddlEspecialidad'];
         }       
         
         if (!isset($_POST['txtValor'])) {
@@ -63,7 +63,7 @@
                        APELLIDOP_ABO=:APELLIDOP_ABO,
                        APELLIDOM_ABO=:APELLIDOM_ABO,
                        FECHA_CONTRATO=:FECHA_CONTRATO,
-                       ESPECIALIDAD=:ESPECIALIDAD,
+                       ID_ESPECIALIDAD=:ESPECIALIDAD,
                        VALOR_X_HORA=:VALOR_X_HORA"
                        ,true);
                $db->execute(array(
@@ -75,6 +75,6 @@
                        ':ESPECIALIDAD' => $especialidad,
                        ':VALOR_X_HORA' => $valor          
                ));           
-           header("location: ../listarAbogados.php");
+           header("location: ../listarAbogados.php?res=1");
             }
 ?>

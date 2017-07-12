@@ -16,4 +16,4 @@
 	)
         );
         
-        header("location: ../listarUsuarios.php"); 
+        header("location: ../listarUsuarios.php?res=2"); 

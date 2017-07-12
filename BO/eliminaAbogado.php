@@ -16,4 +16,4 @@
 	)
         );
         
-        header("location: ../listarAbogados.php"); 
+        header("location: ../listarAbogados.php?res=2"); 

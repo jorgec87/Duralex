@@ -2,6 +2,19 @@
 require_once './EasyPDO/conexionPDO.php';
 require_once './include/include_valida_session.php';
 $sql_TIPO_USUARIO = $db->get_results("SELECT * FROM duralex.TIPO_USUARIO");
+$sql_ABOGADOS = $db->get_results("SELECT * FROM duralex.ABOGADOS");
+$sql_CLIENTES = $db->get_results("SELECT * FROM duralex.CLIENTES");
+$sql_ATENCIONES = $db->get_results("SELECT ID_ATENCION id,FECHA_ATENCION fecha,"
+        ."(SELECT VALOR_X_HORA FROM duralex.abogados where ID_ABOGADO=atenciones.ID_ABOGADO)valor,".
+        "(SELECT NOMBRE_CLI FROM duralex.clientes where ID_CLIENTE=atenciones.ID_CLIENTE)nombre_cli,".
+        "(SELECT APELLIDOP_CLI FROM duralex.clientes where ID_CLIENTE=atenciones.ID_CLIENTE)apellidop_cli,". 
+        "(SELECT APELLIDOM_CLI FROM duralex.clientes where ID_CLIENTE=atenciones.ID_CLIENTE)apellidom_cli,".
+        "(SELECT NOMBRE_ABO FROM duralex.abogados where ID_ABOGADO=atenciones.ID_ABOGADO)nombre_abo,".
+        "(SELECT APELLIDOP_ABO FROM duralex.abogados where ID_ABOGADO=atenciones.ID_ABOGADO)apellidop_abo,". 
+        "(SELECT APELLIDOM_ABO FROM duralex.abogados where ID_ABOGADO=atenciones.ID_ABOGADO)apellidom_abo,". 
+        "(SELECT DESCRIPCION FROM duralex.estados WHERE ID_ESTADO = atenciones.ID_ESTADO)estado FROM duralex.ATENCIONES");
+
+$sql_ESTADOS = $db->get_results("SELECT * FROM ESTADOS"); 
 ?>
 <!DOCTYPE html>
 <html>
@@ -23,6 +36,13 @@ $sql_TIPO_USUARIO = $db->get_results("SELECT * FROM duralex.TIPO_USUARIO");
         <!-- this page specific styles -->
         <link rel="stylesheet" href="css/libs/daterangepicker.css" type="text/css" />
         <link rel="stylesheet" href="css/libs/select2.css" type="text/css" />
+        <!-- this page specific styles -->
+	<link rel="stylesheet" type="text/css" href="css/libs/ns-default.css"/>
+	<link rel="stylesheet" type="text/css" href="css/libs/ns-style-growl.css"/>
+	<link rel="stylesheet" type="text/css" href="css/libs/ns-style-bar.css"/>
+	<link rel="stylesheet" type="text/css" href="css/libs/ns-style-attached.css"/>
+	<link rel="stylesheet" type="text/css" href="css/libs/ns-style-other.css"/>
+	<link rel="stylesheet" type="text/css" href="css/libs/ns-style-theme.css"/>
         <!-- Favicon -->
         <link type="image/x-icon" href="favicon.png" rel="shortcut icon"/>
         <!-- google font libraries -->
@@ -36,23 +56,6 @@ $sql_TIPO_USUARIO = $db->get_results("SELECT * FROM duralex.TIPO_USUARIO");
             
             <header class="navbar" id="header-navbar">
                 <div class="container">
-                         <?php 
-      
-         if(isset($_GET['res'])) {
-            if($_GET['res']==1){
-              ?>     
-            <!--                    alerta bootstrap-->
-
-                    <div class="alert alert-success" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong>Bienvenido!</strong>  <?php echo "     ".$_SESSION['nombre']." ".$_SESSION['apellido_paterno'];?> 
-                  </div>
-<!--                  fin alerta bootstrap-->
-               <?php
-            }
-        }
- ?>
-
                     <a href="index.php" id="logo" class="navbar-brand">
                         <label>DURALEX</label>
                     </a>
@@ -92,7 +95,8 @@ $sql_TIPO_USUARIO = $db->get_results("SELECT * FROM duralex.TIPO_USUARIO");
                         <section id="col-left" class="col-left-nano">
                             <div id="col-left-inner" class="col-left-nano-content">
                                 <div id="user-left-box" class="clearfix hidden-sm hidden-xs">
-                                    <img src="img/icon-user.png" alt=""/>
+                                    <i class="fa fa-user  fa-5x" style="color: #fff"></i>
+                                    
                                     <div class="user-box">
                                         <span class="name">
                                             Bienvenido<br/>
@@ -105,7 +109,7 @@ $sql_TIPO_USUARIO = $db->get_results("SELECT * FROM duralex.TIPO_USUARIO");
                                 </div>
                                 <div class="collapse navbar-collapse navbar-ex1-collapse" id="sidebar-nav">	
                                     <ul class="nav nav-pills nav-stacked">
-                                        <li class="active">
+                                        <li class="active" >
                                             <a href="index.php" >
                                                 <i class="fa fa-dashboard"></i>
                                                 <span>Inicio</span>
@@ -147,22 +151,130 @@ $sql_TIPO_USUARIO = $db->get_results("SELECT * FROM duralex.TIPO_USUARIO");
                                                 <?php } ?> 
                                             </ul>
                                         </li>
-
+                                        <?php if($_SESSION['tipo']== 1 || $_SESSION['tipo']== 2){ ?>
+                                        <li >
+                                            <a href="#" class="dropdown-toggle">
+                                                <i class="fa fa-bar-chart-o"></i>
+                                                <span>Estadistica</span>
+                                                <i class="fa fa-chevron-circle-right drop-icon"></i>
+                                            </a>
+                                            <ul class="submenu">
+                                                  
+                                                <li >
+                                                    <a href="estadisticasAtenciones.php">
+                                                        Atenciones
+                                                    </a>
+                                                </li>
+                                                
+                                                <li >
+                                                    <a href="estadisticaClientes.php">
+                                                        Clientes
+                                                         </a>
+                                                  </li>      
+                                            </ul>
+                                        </li>
+                                        <?php } ?> 
                                     </ul>
                                 </div>
                             </div>
                         </section>
                     </div>
                     <div id="content-wrapper">
-                        <div class="row">
-                           
+                        
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+									<div class="main-box">
+										<div class="clearfix">
+											<div class="infographic-box merged merged-top pull-left">
+												<i class="fa fa-user green-bg"></i>
+												<span class="value green">3</span>
+												<span class="headline">Usuarios</span>
+											</div>
+											<div class="infographic-box merged merged-top merged-right pull-left">
+												<i class="fa fa-money green-bg"></i>
+												<span class="value green">$12.400</span>
+												<span class="headline">Recaudacion</span>
+											</div>
+										</div>
+										<div class="clearfix">
+											<div class="infographic-box merged pull-left">
+												<i class="fa fa-eye yellow-bg"></i>
+												<span class="value yellow">125</span>
+												<span class="headline"> Visitas Mensuales</span>
+											</div>
+											<div class="infographic-box merged merged-right pull-left">
+												<i class="fa fa-globe red-bg"></i>
+												<span class="value red">28</span>
+												<span class="headline">Countries</span>
+											</div>
+										</div>
+									</div>
+								</div>
+                       <div class="row">
+                            <div class="col-lg-10 col-lg-offset-1">
+                                <div class="main-box">
+                                    
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="main-box clearfix">
+                                                <header class="main-box-header clearfix">
+                                                    <h2 class="pull-left">Ultimas Atenciones</h2>
+                                                
+                                                   
+                                                </header>
 
-                        <footer id="footer-bar" class="row">
-                            <p id="footer-copyright" class="col-xs-12">
-                                &copy; 2014 <a href="http://www.adbee.sk/" target="_blank">Adbee digital</a>. Powered by Centaurus Theme.
-                            </p>
-                        </footer>
-                    </div>
+                                                <div class="main-box-body clearfix">
+                                                    <div class="table-responsive">
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="text-left"><a><span>Fecha</span></a></th>
+                                                                    <th class="text-left"><a><span>Cliente</span></a></th>
+                                                                    <th class="text-left"><a><span>Abogado</span></a></th>
+                                                                    <th class="text-left"><a><span>Valor de Atencion</span></a></th>
+                                                                   
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                 <?php
+                                                                foreach ($sql_ATENCIONES as $key => $atencion) 
+                                                                { 
+                                                                    ?>
+                                                                 <tr>
+                                                                <td class="text-left"> 
+                                                                    <a><?php echo $atencion->fecha; ?></a> 
+                                                                </td>
+                                                                <td class="text-left"> 
+                                                                    <?php echo $atencion->nombre_cli.' '.$atencion->apellidop_cli.' '.$atencion->apellidom_cli; ?>
+                                                                </td>
+                                                                <td class="text-left"> 
+                                                                    <?php echo $atencion->nombre_abo.' '.$atencion->apellidop_abo.' '.$atencion->apellidom_abo; ?>
+                                                                </td>
+                                                                <td class="text-left"> 
+                                                                    <?php echo "$ ".$atencion->valor; ?>
+                                                                </td>
+                                                                <?php if($atencion->estado == "Anulada" || $atencion->estado == "Perdida" ){ ?>
+                                                                  <td class="text-left"> 
+                                                                 <span class="label label-danger"><?php echo $atencion->estado; ?></span>
+                                                                 </td>
+                                                               <?php }else{?>
+                                                                <td class="text-left"> 
+                                                                   <span class="label label-primary"><?php echo $atencion->estado; ?></span> 
+                                                                </td>
+                                                                <?php }?>
+                                                                  </tr>
+                                                                <?php
+                                                                    }
+                                                                ?>                                                              
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                 </div>
             </div>
         </div>
@@ -183,7 +295,12 @@ $sql_TIPO_USUARIO = $db->get_results("SELECT * FROM duralex.TIPO_USUARIO");
         <script src="js/hogan.js"></script>
         <script src="js/typeahead.min.js"></script>
         <script src="js/jquery.pwstrength.js"></script>
-
+	<!-- this page specific scripts -->
+	<script src="js/modernizr.custom.js"></script>
+	<script src="js/snap.svg-min.js"></script> <!-- For Corner Expand and Loading circle effect only -->
+	<script src="js/classie.js"></script>
+	<script src="js/notificationFx.js"></script>
+	
 
         <!-- theme scripts -->
         <script src="js/scripts.js"></script>
@@ -196,14 +313,35 @@ $sql_TIPO_USUARIO = $db->get_results("SELECT * FROM duralex.TIPO_USUARIO");
          
  $('#ddl_select_tipo').select2();
  
- //tiempo del alert
-    window.setTimeout(function() {
-    $(".alert").fadeTo(500, 0).slideUp(500, function(){
-        $(this).remove(); 
-      });
-     }, 3000);
+
 	});
 	</script>
 
     </body>
 </html>
+
+ <?php 
+      
+         if(isset($_GET['res'])) {
+            if($_GET['res']==1){
+              ?>     
+                    <script>
+    // create the notification
+            var notification = new NotificationFx({
+                    wrapper: document .body,
+                    message : '<span class="fa fa-user fa-3x pull-left"></span><p><strong>Bienvenido!</strong>  <?php echo "     ".$_SESSION['nombre']." ".$_SESSION['apellido_paterno'];?></p>',
+                    layout : 'attached',
+                    effect : 'bouncyflip',
+                    type : 'success', // notice, warning or error
+                    onClose : function() {
+
+                    }
+            });
+
+            // show the notification
+            notification.show();
+                    </script>
+               <?php
+            }
+        }
+ ?>

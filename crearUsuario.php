@@ -23,6 +23,7 @@ $sql_TIPO_USUARIO = $db->get_results("SELECT * FROM duralex.TIPO_USUARIO");
         <!-- this page specific styles -->
         <link rel="stylesheet" href="css/libs/daterangepicker.css" type="text/css" />
         <link rel="stylesheet" href="css/libs/select2.css" type="text/css" />
+        
         <!-- Favicon -->
         <link type="image/x-icon" href="favicon.png" rel="shortcut icon"/>
         <!-- google font libraries -->
