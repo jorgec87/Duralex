@@ -47,6 +47,7 @@ $sql_ESTADOS = $db->get_results("SELECT * FROM ESTADOS");
 	<link rel="stylesheet" href="css/libs/daterangepicker.css" type="text/css" />
 	<link rel="stylesheet" href="css/libs/bootstrap-timepicker.css" type="text/css" />
 	<link rel="stylesheet" href="css/libs/select2.css" type="text/css" />
+        <link rel="stylesheet" href="css/libs/morris.css" type="text/css" />
         <link href="css/style.css" rel="stylesheet" type="text/css"/>
 	<!-- Favicon -->
 	<link type="image/x-icon" href="favicon.png" rel="shortcut icon"/>
@@ -256,7 +257,15 @@ $sql_ESTADOS = $db->get_results("SELECT * FROM ESTADOS");
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group col-lg-4 col-lg-offset-4">
+                                                        <div class="row">
+                                                            <div class="form-group col-md-12">
+                                                                <div class="graph-box emerald-bg">
+                                                                    <h2>Atenciones &amp; Dinero</h2>
+                                                                    <div class="graph" id="graph-line" style="max-height: 335px;"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                                                                            <div class="form-group col-lg-4 col-lg-offset-4">
                                                         <div class="form-group">
                                                             <button type="submit" style="width:80%; border-radius:4px;" class="btn  btn-success">&nbsp&nbsp&nbsp&nbsp&nbsp&nbspFiltrar&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</button>
                                                         </div>
@@ -342,6 +351,16 @@ $sql_ESTADOS = $db->get_results("SELECT * FROM ESTADOS");
         <script src="js/hogan.js"></script>
         <script src="js/typeahead.min.js"></script>
         <script src="js/jquery.pwstrength.js"></script>
+        <script src="js/jquery-ui.custom.min.js"></script>
+	<script src="js/fullcalendar.min.js"></script>
+	<script src="js/jquery.slimscroll.min.js"></script>
+	<script src="js/raphael-min.js"></script>
+	<script src="js/morris.min.js"></script>
+	<script src="js/moment.min.js"></script>
+	<script src="js/daterangepicker.js"></script>
+	<script src="js/jquery-jvectormap-1.2.2.min.js"></script>
+	<script src="js/jquery-jvectormap-world-merc-en.js"></script>
+	<script src="js/gdp-data.js"></script>
 
         <!-- theme scripts -->
         <script src="js/scripts.js"></script>
@@ -352,6 +371,45 @@ $sql_ESTADOS = $db->get_results("SELECT * FROM ESTADOS");
 
     </body>
 </html>
+
+<script>
+	$(document).ready(function() {
+		
+	    $('.conversation-inner').slimScroll({
+	        height: '352px',
+	        alwaysVisible: false,
+	        railVisible: true,
+	        wheelStep: 5,
+	        allowPageScroll: false
+	    });
+		
+	    //CHARTS
+		graphLine = Morris.Line({
+			element: 'graph-line',
+			data: [
+				{period: '2014-01-01', iphone: 2666, ipad: null, itouch: 2647},
+				{period: '2014-01-02', iphone: 9778, ipad: 2294, itouch: 2441},
+				{period: '2014-01-03', iphone: 4912, ipad: 1969, itouch: 2501},
+				{period: '2014-01-04', iphone: 3767, ipad: 3597, itouch: 5689},
+				{period: '2014-01-05', iphone: 6810, ipad: 1914, itouch: 2293},
+				{period: '2014-01-06', iphone: 5670, ipad: 4293, itouch: 1881},
+				{period: '2014-01-07', iphone: 4820, ipad: 3795, itouch: 1588},
+				{period: '2014-01-08', iphone: 15073, ipad: 5967, itouch: 5175},
+				{period: '2014-01-09', iphone: 10687, ipad: 4460, itouch: 2028},
+				{period: '2014-01-10', iphone: 8432, ipad: 5713, itouch: 1791}
+			],
+			lineColors: ['#ffffff'],
+			xkey: 'period',
+			ykeys: ['iphone'],
+			labels: ['iPhone'],
+			pointSize: 3,
+			hideHover: 'auto',
+			gridTextColor: '#ffffff',
+			gridLineColor: 'rgba(255, 255, 255, 0.3)',
+			resize: true
+		});
+	});
+</script>
 
  <script>
 	$(function($) {
