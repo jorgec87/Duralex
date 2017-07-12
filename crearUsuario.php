@@ -1,5 +1,5 @@
 <?php
-require_once './include/include_valida_session.php';
+//require_once './include/include_valida_session.php';
 require_once './EasyPDO/conexionPDO.php';
 $sql_TIPO_USUARIO = $db->get_results("SELECT * FROM duralex.TIPO_USUARIO");
 ?>

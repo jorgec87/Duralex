@@ -1,0 +1,96 @@
+.onoffswitch {
+    position: relative; width: 200px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+.onoffswitch-checkbox {
+    display: none;
+}
+.onoffswitch-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #E3E3E3; border-radius: 36px;
+}
+.onoffswitch-inner {
+    display: block; width: 200%; margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+}
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+    display: block; float: left; width: 50%; height: 35px; padding: 0; line-height: 35px;
+    font-size: 16px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    box-sizing: border-box;
+}
+.onoffswitch-inner:before {
+    content: "RANGO DE FECHA";
+    padding-left: 10px;
+    background-color: #3283A3; color: #FFFFFF;
+}
+.onoffswitch-inner:after {
+    content: "MES DEL AÑO";
+    padding-right: 10px;
+    background-color: #269418; color: #FFFFFF;
+    text-align: right;
+}
+.onoffswitch-switch {
+    display: block; width: 27px; margin: 4px;
+    background: #FFFFFF;
+    position: absolute; top: 0; bottom: 0;
+    right: 161px;
+    border: 2px solid #E3E3E3; border-radius: 36px;
+    transition: all 0.3s ease-in 0s; 
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+    right: 0px; 
+}
+
+.onoffswitchA {
+    position: relative; width: 200px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+.onoffswitchA-checkbox {
+    display: none;
+}
+.onoffswitchA-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #E3E3E3; border-radius: 36px;
+}
+.onoffswitchA-inner {
+    display: block; width: 200%; margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+}
+.onoffswitchA-inner:before, .onoffswitchA-inner:after {
+    display: block; float: left; width: 50%; height: 35px; padding: 0; line-height: 35px;
+    font-size: 16px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    box-sizing: border-box;
+}
+.onoffswitchA-inner:before {
+    content: "ABOGADO";
+    padding-left: 10px;
+    background-color: #3283A3; color: #FFFFFF;
+}
+.onoffswitchA-inner:after {
+    content: "ESPECIALIDAD";
+    padding-right: 10px;
+    background-color: #269418; color: #FFFFFF;
+    text-align: right;
+}
+.onoffswitchA-switch {
+    display: block; width: 27px; margin: 4px;
+    background: #FFFFFF;
+    position: absolute; top: 0; bottom: 0;
+    right: 161px;
+    border: 2px solid #E3E3E3; border-radius: 36px;
+    transition: all 0.3s ease-in 0s;
+}
+.onoffswitchA-checkbox:checked + .onoffswitchA-label .onoffswitchA-inner {
+    margin-left: 0;
+}
+.onoffswitchA-checkbox:checked + .onoffswitchA-label .onoffswitchA-switch {
+    right: 0px; 
+}
+
+#datepickerDateRange
+{
+   width: 100%!important;
+}
